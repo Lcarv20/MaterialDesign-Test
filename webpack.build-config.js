@@ -1,9 +1,32 @@
 const path = require("path");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = {
+	// <<-- Entry (index.js) gonna be transformed to bundle.js
 	entry: "./src/index.js",
 	output: {
 		filename: "bundle.js",
 		path: path.resolve(__dirname, "dist"),
+	},
+	// -->>
+
+	// <<-- Module loaders transform & improve our assets
+	module: {
+		rules: [
+			{
+				// Files we want to apply the loaders to (css)
+				test: /\.css$/i,
+				// These loaders allow us to import our styles in our index.js
+				use: ["style-loader", "css-loader"],
+			},
+		],
+	},
+	optimization: {
+		minimize: true,
+		minimizer: [
+			// For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+			// `...`
+			new CssMinimizerPlugin(),
+		],
 	},
 };
