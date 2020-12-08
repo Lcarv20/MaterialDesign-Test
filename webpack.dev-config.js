@@ -1,10 +1,10 @@
 const path = require("path");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+//const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-	mode: "production",
+	mode: "development",
 	// <<-- Entry (index.js) gonna be transformed to bundle.js
 	entry: {
 		index: "./src/index.js",
@@ -55,12 +55,5 @@ module.exports = {
 			title: "Material Ui Starter Kit",
 		}),
 	],
-	optimization: {
-		minimize: true,
-		minimizer: [
-			// For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
-			// `...`
-			new CssMinimizerPlugin(),
-		],
-	},
+	optimization: {},
 };
