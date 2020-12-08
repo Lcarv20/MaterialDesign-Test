@@ -24,6 +24,16 @@ module.exports = {
 					"sass-loader",
 				],
 			},
+			{
+				// Image loaders
+				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				type: "asset/resource",
+			},
+			{
+				// Font loaders
+				test: /\.(woff|woff2|eot|ttf|otf)$/i,
+				type: "asset/resource",
+			},
 		],
 	},
 	optimization: {
