@@ -1,5 +1,6 @@
 const path = require("path");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
 	// <<-- Entry (index.js) gonna be transformed to bundle.js
@@ -36,6 +37,12 @@ module.exports = {
 			},
 		],
 	},
+	plugins: [
+		// To prevent build Html from scratch
+		new HtmlWebpackPlugin({
+			title: "Output Management",
+		}),
+	],
 	optimization: {
 		minimize: true,
 		minimizer: [
