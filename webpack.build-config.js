@@ -14,10 +14,15 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				// Files we want to apply the loaders to (css)
-				test: /\.css$/i,
-				// These loaders allow us to import our styles in our index.js
-				use: ["style-loader", "css-loader"],
+				test: /\.s[ac]ss$/i,
+				use: [
+					// Creates `style` nodes from JS strings
+					"style-loader",
+					// Translates CSS into CommonJS
+					"css-loader",
+					// Compiles Sass to CSS
+					"sass-loader",
+				],
 			},
 		],
 	},
