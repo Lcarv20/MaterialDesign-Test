@@ -25,6 +25,16 @@ module.exports = {
 				loader: "babel-loader",
 			},
 			{
+				// css loader in case I, or someone prefers to (although not needed, but it prevents anxiety levels from rising)
+				test: /\.css$/i,
+				use: [
+					// Creates `style` nodes from JS strings
+					"style-loader",
+					// Translates CSS into CommonJS
+					"css-loader",
+				],
+			},
+			{
 				// Sass loader
 				test: /\.(scss|css)$/,
 				use: [
@@ -32,7 +42,9 @@ module.exports = {
 					MiniCssExtractPlugin.loader,
 					// Translates CSS into CommonJS
 					"css-loader",
-					// Compiles Sass to CSS
+					// Compiles postcss to css
+					"postcss-loader",
+					// Compiles Sass to postcss
 					"sass-loader",
 				],
 			},

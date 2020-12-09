@@ -49,7 +49,9 @@ module.exports = {
 					"style-loader",
 					// Translates CSS into CommonJS
 					"css-loader",
-					// Compiles Sass to CSS
+					// Compiles postcss to css
+					"postcss-loader",
+					// Compiles Sass to postcss
 					"sass-loader",
 				],
 			},
@@ -67,7 +69,15 @@ module.exports = {
 	},
 	plugins: [
 		// Cleans dist after build
-		new CleanWebpackPlugin({}),
+		new CleanWebpackPlugin({
+			// Simulate the removal of files
+			dry: true,
+			// Write Logs to Console
+			verbose: true,
+			// Automatically remove all unused webpack assets on rebuild
+			cleanStaleWebpackAssets: true,
+			protectWebpackAssets: false,
+		}),
 
 		// The HtmlWebpackPlugin simplifies creation of HTML files to serve
 		// webpack bundles, even if they change name (in this case as I just have
