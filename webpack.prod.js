@@ -8,22 +8,18 @@ const TerserPlugin = require("terser-webpack-plugin");
 module.exports = {
 	mode: "production",
 	entry: {
-		main: path.resolve(__dirname, "src/client/index.js"),
+		main: path.resolve(__dirname, "src/client/index.tsx"),
 	},
-	output: {
-		filename: "[name].bundle.js",
-		path: path.resolve(__dirname, "dist"),
-	},
-	// -->>
-
 	// <<-- Module loaders transform & improve our assets
 	module: {
 		rules: [
 			{
-				test: "/.js$/",
+				// Loader for ts
+				test: /\.(tsx?|jsx)$/,
 				exclude: /node_modules/,
-				loader: "babel-loader",
+				use: "ts-loader",
 			},
+
 			{
 				// css loader in case I, or someone prefers to (although not needed, but it prevents anxiety levels from rising)
 				test: /\.css$/i,
@@ -60,6 +56,9 @@ module.exports = {
 			},
 		],
 	},
+	resolve: {
+		extensions: [".tsx", ".jsx", ".ts", ".js"],
+	},
 	plugins: [
 		// Cleans dist after build
 		new CleanWebpackPlugin(),
@@ -84,5 +83,10 @@ module.exports = {
 			new TerserPlugin({}),
 			new CssMinimizerPlugin(),
 		],
+	},
+
+	output: {
+		filename: "[name].bundle.js",
+		path: path.resolve(__dirname, "dist"),
 	},
 };

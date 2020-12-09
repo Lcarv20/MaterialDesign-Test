@@ -6,7 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
 	mode: "development",
 	entry: {
-		main: path.resolve(__dirname, "./src/client/index.js"),
+		main: path.resolve(__dirname, "./src/client/index.tsx"),
 	},
 	devtool: "inline-source-map",
 	devServer: {
@@ -25,11 +25,11 @@ module.exports = {
 	// <<-- Module loaders transform & improve our assets
 	module: {
 		rules: [
-			//Loader for babel (to convert all es6+ into browswer compatible js)
 			{
-				test: "/.js$/",
+				// Loader for ts
+				test: /\.(tsx?|jsx)$/,
+				use: "ts-loader",
 				exclude: /node_modules/,
-				loader: "babel-loader",
 			},
 			{
 				// css loader
@@ -66,6 +66,9 @@ module.exports = {
 				type: "asset/resource",
 			},
 		],
+	},
+	resolve: {
+		extensions: [".tsx", ".jsx", ".ts", ".js"],
 	},
 	plugins: [
 		// Cleans dist after build
