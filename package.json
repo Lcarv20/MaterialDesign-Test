@@ -4,9 +4,9 @@
 	"description": "Material Design starter pack with Webpack5, TS, Sass",
 	"private": true,
 	"scripts": {
-		"build-prod": "webpack --config webpack.prod.js",
-		"build-dev": "webpack serve --config webpack.dev.js",
-		"preview-dist": "http-server ./dist --port 7070",
+		"build": "webpack --config webpack.prod.js",
+		"start": "webpack serve --config webpack.dev.js",
+		"prev-dist": "http-server ./dist --port 7070",
 		"serve": "go run server/server.go"
 	},
 	"repository": {

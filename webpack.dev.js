@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-const indexPathBase = path.relative(__dirname, "./src/client/index.");
+const indexPathBase = path.relative(__dirname, "./src/index.");
 
 const exts = ["tsx", "jsx", "ts", "js"];
 
@@ -105,7 +105,7 @@ module.exports = {
 		// webpack bundles, even if they change name (in this case as I just have
 		// one entry point (bundle.js) it doens't matter)
 		new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, "./src/client/views/template.html"), //template
+			template: path.resolve(__dirname, "./public/index.html"), //template
 			filename: "index.html", //output file
 		}),
 		new webpack.HotModuleReplacementPlugin(),
