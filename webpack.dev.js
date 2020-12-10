@@ -1,14 +1,33 @@
+const fs = require("fs");
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+const indexPathBase = path.relative(__dirname, "./src/client/index.");
+
+const exts = ["tsx", "jsx", "ts", "js"];
+
+function findEntry(filepath, exts) {
+	let res;
+	for (let i = 0; i < exts.length; i++) {
+		if (fs.existsSync(filepath + exts[i])) {
+			if (res) {
+				throw `There is more than one entry ${res} ${filepath + exts[i]}`;
+			} else {
+				res = filepath + exts[i];
+			}
+		}
+	}
+	return res;
+}
+
 module.exports = {
 	mode: "development",
 	entry: {
-		main: path.resolve(__dirname, "./src/client/index.tsx"),
+		main: path.resolve(__dirname, findEntry(indexPathBase, exts)),
 	},
-	devtool: "inline-source-map",
+	devtool: "source-map",
 	devServer: {
 		historyApiFallback: true,
 		contentBase: path.resolve(__dirname, "./dist"),
@@ -27,7 +46,7 @@ module.exports = {
 		rules: [
 			{
 				// Loader for ts
-				test: /\.(tsx?|jsx)$/,
+				test: /\.(tsx?|jsx?)$/,
 				use: "ts-loader",
 				exclude: /node_modules/,
 			},
