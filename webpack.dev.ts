@@ -1,15 +1,16 @@
-const fs = require("fs");
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+import fs from "fs";
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 const indexPathBase = path.relative(__dirname, "./src/index.");
 
 const exts = ["tsx", "jsx", "ts", "js"];
 
-function findEntry(filepath, exts) {
-	let res;
+function findEntry(filepath: string, exts: string[]) {
+	let res: string = "";
 	for (let i = 0; i < exts.length; i++) {
 		if (fs.existsSync(filepath + exts[i])) {
 			if (res) {
@@ -22,7 +23,7 @@ function findEntry(filepath, exts) {
 	return res;
 }
 
-module.exports = {
+const config: webpack.Configuration = {
 	mode: "development",
 	entry: {
 		main: path.resolve(__dirname, findEntry(indexPathBase, exts)),
@@ -44,11 +45,25 @@ module.exports = {
 	// <<-- Module loaders transform & improve our assets
 	module: {
 		rules: [
+			// {
+			// 	// Loader for ts
+			// 	test: /\.(tsx?|jsx?)$/,
+			// 	use: "ts-loader",
+			// 	exclude: /node_modules/,
+			// },
 			{
-				// Loader for ts
-				test: /\.(tsx?|jsx?)$/,
-				use: "ts-loader",
+				test: /\.(ts|js)x?$/,
 				exclude: /node_modules/,
+				use: {
+					loader: "babel-loader",
+					options: {
+						presets: [
+							"@babel/preset-env",
+							"@babel/preset-react",
+							"@babel/preset-typescript",
+						],
+					},
+				},
 			},
 			{
 				// css loader
@@ -87,7 +102,7 @@ module.exports = {
 		],
 	},
 	resolve: {
-		extensions: [".tsx", ".jsx", ".ts", ".js"],
+		extensions: [".tsx", ".jsx", "ts", ".js"],
 	},
 	plugins: [
 		// Cleans dist after build
@@ -109,5 +124,14 @@ module.exports = {
 			filename: "index.html", //output file
 		}),
 		new webpack.HotModuleReplacementPlugin(),
+
+		new ForkTsCheckerWebpackPlugin({
+			async: false,
+			eslint: {
+				files: "./src/**/*.{ts,tsx,js,jsx}",
+			},
+		}),
 	],
 };
+
+export default config;
