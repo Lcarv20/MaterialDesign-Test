@@ -15,7 +15,7 @@ export const App = (): JSX.Element => {
 				<span className="mdc-button__label">{phrase}</span>
 			</button>
 
-			<div>Hello world</div>
+			<div>Hello world Again, and now working :)</div>
 		</div>
 	);
 };

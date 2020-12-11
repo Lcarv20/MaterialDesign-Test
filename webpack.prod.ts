@@ -1,16 +1,18 @@
-const fs = require("fs");
-const path = require("path");
-const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin = require("terser-webpack-plugin");
-const indexPathBase = path.relative(__dirname, "./src/index.");
+import fs from "fs";
+import path from "path";
+import webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import TerserPlugin from "terser-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 
+const indexPathBase = path.relative(__dirname, "./src/index.");
 const exts = ["tsx", "jsx", "ts", "js"];
 
-function findEntry(filepath, exts) {
-	let res;
+function findEntry(filepath: string, exts: string[]) {
+	let res: string = "";
 	for (let i = 0; i < exts.length; i++) {
 		if (fs.existsSync(filepath + exts[i])) {
 			if (res) {
@@ -23,7 +25,7 @@ function findEntry(filepath, exts) {
 	return res;
 }
 
-module.exports = {
+const config: webpack.Configuration = {
 	mode: "production",
 	entry: {
 		main: path.resolve(__dirname, findEntry(indexPathBase, exts)),
@@ -93,11 +95,18 @@ module.exports = {
 			template: path.resolve(__dirname, "./public/index.html"),
 			filename: "index.html",
 		}),
+		new ForkTsCheckerWebpackPlugin({
+			async: false,
+			eslint: {
+				files: "./src/**/*.{ts,tsx,js,jsx}",
+			},
+		}),
 	],
 	optimization: {
 		minimize: true,
 		minimizer: [
 			// For webpack@5 you can use the `...` syntax to extend existing minimizers (i.e. `terser-webpack-plugin`), uncomment the next line
+			//`...`
 			new TerserPlugin({}),
 			new CssMinimizerPlugin(),
 		],
@@ -108,3 +117,5 @@ module.exports = {
 		path: path.resolve(__dirname, "dist"),
 	},
 };
+
+export default config;
