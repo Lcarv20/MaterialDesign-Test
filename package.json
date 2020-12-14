@@ -31,6 +31,7 @@
 		"@babel/preset-react": "^7.12.10",
 		"@babel/preset-typescript": "^7.12.7",
 		"@babel/runtime": "^7.12.5",
+		"@svgr/webpack": "^5.5.0",
 		"@types/css-minimizer-webpack-plugin": "^1.1.1",
 		"@types/lodash": "^4.14.165",
 		"@types/mini-css-extract-plugin": "^1.2.1",
