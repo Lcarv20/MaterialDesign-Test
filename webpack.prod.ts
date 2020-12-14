@@ -58,8 +58,13 @@ const config: webpack.Configuration = {
 			},
 			{
 				// Image loaders
-				test: /\.(png|svg|jpg|jpeg|gif)$/i,
+				test: /\.(png|jpg|jpeg|gif)$/i,
 				type: 'asset/resource',
+			},
+			{
+				// SVG Loader (So it's converted to react component)
+				test: /\.svg$/,
+				use: ['@svgr/webpack'],
 			},
 			{
 				// Font loaders
