@@ -1,8 +1,12 @@
 body {
-	background-color: palevioletred;
+	background-color: hsl(0 100% 80%);
 
-	.hello {
-		color: bisque;
-		font-size: 20px;
+	.sass-div {
+		color: azure;
+		background-color: crimson;
+		width: 40%;
+		padding: 1rem;
+		border-radius: 1rem;
+		display: inline-block;
 	}
 }

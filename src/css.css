@@ -1,3 +1,7 @@
-div {
-	border: 1px solid red;
+div.css-div {
+	display: inline-block;
+	background-color: cadetblue;
+	border-radius: 1rem;
+	width: 40%;
+	padding: 1rem;
 }
