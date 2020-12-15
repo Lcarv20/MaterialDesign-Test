@@ -107,6 +107,10 @@ const config: webpack.Configuration = {
 			new TerserPlugin({}),
 			new CssMinimizerPlugin(),
 		],
+		splitChunks: {
+			// include all types of chunks
+			chunks: 'all',
+		},
 	},
 
 	output: {
