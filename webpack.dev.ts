@@ -79,6 +79,7 @@ const config: webpack.Configuration = {
 				type: 'asset/resource',
 			},
 			{
+				// SVG Loader to convert svg into react component, combined with url-loader
 				test: /\.svg$/,
 				use: ['@svgr/webpack', 'url-loader'],
 			},
