@@ -91,7 +91,7 @@ const config: webpack.Configuration = {
 		],
 	},
 	resolve: {
-		extensions: ['.tsx', '.jsx', 'ts', '.js'],
+		extensions: ['.ts', '.tsx', '.js', '.jsx'],
 	},
 	plugins: [
 		// Cleans dist after build
