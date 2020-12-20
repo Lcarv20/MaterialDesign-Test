@@ -30,6 +30,7 @@ const config: webpack.Configuration = {
 	entry: {
 		main: path.resolve(__dirname, findEntry(indexPathBase, exts)),
 	},
+	devtool: 'source-map',
 	// <<-- Module loaders transform & improve our assets
 	module: {
 		rules: [
@@ -60,7 +61,21 @@ const config: webpack.Configuration = {
 				use: [
 					MiniCssExtractPlugin.loader,
 					'css-loader',
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: [
+									[
+										'postcss-preset-env',
+										{
+											browsers: 'last 2 versions',
+										},
+									],
+								],
+							},
+						},
+					},
 					'sass-loader',
 				],
 			},
@@ -115,10 +130,6 @@ const config: webpack.Configuration = {
 			new TerserPlugin({}),
 			new CssMinimizerPlugin(),
 		],
-		splitChunks: {
-			// include all types of chunks
-			chunks: 'all',
-		},
 	},
 
 	output: {

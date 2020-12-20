@@ -28,7 +28,14 @@ const config: webpack.Configuration = {
 	entry: {
 		main: path.resolve(__dirname, findEntry(indexPathBase, exts)),
 	},
-	devtool: 'source-map',
+	devtool: 'eval-cheap-module-source-map',
+	cache: true,
+	optimization: {
+		runtimeChunk: true,
+		removeAvailableModules: false,
+		removeEmptyChunks: false,
+		splitChunks: false,
+	},
 	devServer: {
 		historyApiFallback: true,
 		contentBase: path.resolve(__dirname, './dist'),
@@ -40,6 +47,7 @@ const config: webpack.Configuration = {
 	output: {
 		path: path.resolve(__dirname, './dist'),
 		filename: '[name].bundle.js',
+		pathinfo: false,
 	},
 
 	// <<-- Module loaders transform & improve our assets
@@ -76,7 +84,21 @@ const config: webpack.Configuration = {
 					// Translates CSS into CommonJS
 					'css-loader',
 					// Compiles postcss to css
-					'postcss-loader',
+					{
+						loader: 'postcss-loader',
+						options: {
+							postcssOptions: {
+								plugins: [
+									[
+										'postcss-preset-env',
+										{
+											browsers: 'last 2 versions',
+										},
+									],
+								],
+							},
+						},
+					},
 					// Compiles Sass to postcss
 					'sass-loader',
 				],
@@ -100,6 +122,7 @@ const config: webpack.Configuration = {
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js', '.jsx'],
+		symlinks: false,
 	},
 	plugins: [
 		// Cleans dist after build
